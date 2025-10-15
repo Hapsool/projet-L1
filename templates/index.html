@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartLight Web • Raspberry Pi</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+<header>
+  <h1>💡 SmartLight Web</h1>
+  <p>Contrôle & supervision de l’éclairage — Raspberry Pi</p>
+</header>
+
+<main>
+  <section class="status">
+    <div class="card">
+      <h2>État en temps réel</h2>
+      <div class="grid-2">
+        <div><div class="label">Luminosité</div><div class="value"><span id="lux">--</span> lux</div></div>
+        <div><div class="label">Présence</div><div class="value"><span id="presence">--</span></div></div>
+        <div><div class="label">Lampe</div><div class="value"><span id="led">--</span></div></div>
+        <div><div class="label">Mode</div><div class="value"><span id="mode">MANUEL</span></div></div>
+      </div>
+      <div class="intensity">
+        <label>Intensité</label>
+        <div class="bar"><div id="intensityBar" class="bar-fill" style="width:0%"></div></div>
+        <small id="intensityText">0%</small>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Actions</h2>
+      <div class="actions">
+        <button id="btn-on" class="btn primary">Allumer</button>
+        <button id="btn-off" class="btn">Éteindre</button>
+        <button id="btn-man" class="btn ghost">Manuel</button>
+        <button id="btn-auto" class="btn ghost">Auto</button>
+        <button id="btn-clap" class="btn ghost">Clap ×2</button>
+      </div>
+      <div class="controls">
+        <label for="seuil">Seuil (lux)</label>
+        <input type="range" id="seuil" min="50" max="800" step="10" value="400" />
+        <span id="seuilVal">400</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Historique</h2>
+    <button id="refreshHistory" class="btn small">Rafraîchir</button>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Date/heure</th><th>État</th><th>Lux</th><th>Présence</th><th>Mode</th><th>Raison</th><th>Intensité</th></tr>
+        </thead>
+        <tbody id="historyBody"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <small>© SmartLight — {{ 2025 }}</small>
+</footer>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
