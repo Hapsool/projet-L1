@@ -1,4 +1,2 @@
-DB_CAPTEURS = "data/capteurs.db"
-DB_SITE = "data/site.db"
-
+DB_PATH = "data/data_base.db"
 API_PORT = 8000
