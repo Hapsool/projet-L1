@@ -43,13 +43,13 @@ def setup():
   resultat = conn.execute("SELECT COUNT(*) FROM config")
   nb = resultat.fetchone()[0]
   if nb_mesures == 0 :
-    conn.execute("INSERT INTO config (mode, luminosite, jeu_de_lumiere) VALUES (?, ?, ?)", ("manual",50,"static"))
+    conn.execute("INSERT INTO config (mode, luminosite, jeu_de_lumiere) VALUES (?, ?, ?)", ("manual",0,"static"))
 
   # pour la table couleurs :
   resultat = conn.execute("SELECT COUNT(*) FROM couleurs")
   nb = resultat.fetchone()[0]
   if nb_mesures == 0 :
-    conn.executemany("INSERT INTO couleurs (id, r, g, b) VALUES (?, ?, ?, ?)", [(i,255,255,255) for i in range(1,65)])
+    conn.executemany("INSERT INTO couleurs (id, r, g, b) VALUES (?, ?, ?, ?)", [(i,0,0,0) for i in range(1,65)])
 
   # La table images peut être vide.
     
