@@ -44,7 +44,7 @@ def setup():
   resultat = conn.execute("SELECT COUNT(*) FROM config")
   nb = resultat.fetchone()[0]
   if nb_mesures == 0 :
-    conn.execute("INSERT INTO config (mode, luminosite, jeu_de_lumiere, etat) VALUES (?, ?, ?, ?)", ("manual",0,"static",0))
+    conn.execute("INSERT INTO config (mode, luminosite, jeu_de_lumiere, etat) VALUES (?, ?, ?, ?)", ("manual",30,"static",0))
 
   # pour la table couleurs :
   resultat = conn.execute("SELECT COUNT(*) FROM couleurs")
