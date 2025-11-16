@@ -28,3 +28,10 @@ def allumer_led():
     for i in range(NUM_LEDS):
         pixels[i] = couleurs[i]
     pixels.show()
+
+def changer_luminosite(valeur:int):
+    """ valeur : entre 0 et 100 """
+    conn = sqlite3.connect(DB_PATH)
+    luminosite = conn.execute("SELECT luminosite FROM config").fetchone()[0]
+    conn.close()
+    pixels.brightness = luminosite/100
