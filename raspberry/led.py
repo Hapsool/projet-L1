@@ -23,7 +23,7 @@ def eteindre_led():
 
 def allumer_led():
     conn = sqlite3.connect(DB_PATH)
-    couleurs = conn.execute("SELECT R, G, B FROM couleurs ORDER BY id").fetchall() # ex : [(255,255,255),(...),...]
+    couleurs = conn.execute("SELECT r, g, b FROM couleurs ORDER BY id").fetchall() # ex : [(255,255,255),(...),...]
     conn.close()
     for i in range(NUM_LEDS):
         pixels[i] = couleurs[i]
