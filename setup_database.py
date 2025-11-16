@@ -6,7 +6,7 @@ def setup():
   conn.execute("PRAGMA journal_mode=WAL;")
 
   # Créations des tables si elles n'existes pas :
-  connect.executescript("""
+  conn.executescript("""
   CREATE TABLE IF NOT EXISTS mesures (
     pir INTEGER,
     light INTEGER,
