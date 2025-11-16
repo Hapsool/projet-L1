@@ -1,5 +1,5 @@
 import sqlite3
-from config import DB_PATH
+from config import DB_PATH, NUM_LEDS
 
 def setup():
   conn = sqlite3.connect(DB_PATH)
@@ -50,7 +50,7 @@ def setup():
   resultat = conn.execute("SELECT COUNT(*) FROM couleurs")
   nb = resultat.fetchone()[0]
   if nb_mesures == 0 :
-    conn.executemany("INSERT INTO couleurs (id, r, g, b) VALUES (?, ?, ?, ?)", [(i,255,255,255) for i in range(1,65)])
+    conn.executemany("INSERT INTO couleurs (id, r, g, b) VALUES (?, ?, ?, ?)", [(i,255,255,255) for i in range(1,NUM_LEDS+1)])
 
   # La table images peut être vide.
     
