@@ -6,7 +6,9 @@ membres du groupe : -Raphael ROBIN
 
 
 ## Installation
-
+installer les bibliothèques suivantes : -rpi_ws281x
+                                        -adafruit-circuitpython-neopixel
+                                        -adafruit-blinka
 
 
 
