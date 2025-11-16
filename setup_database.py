@@ -16,7 +16,7 @@ def setup():
     mode TEXT NOT NULL,
     luminosite INTEGER NOT NULL,
     jeu_de_lumiere TEXT NOT NULL,
-    etat INTEGER NOT NULL,
+    etat INTEGER NOT NULL
   );
   CREATE TABLE IF NOT EXISTS couleurs (
     id INTEGER PRIMARY KEY,
@@ -37,19 +37,19 @@ def setup():
   # pour la table mesures :
   resultat = conn.execute("SELECT COUNT(*) FROM mesures")
   nb = resultat.fetchone()[0]
-  if nb_mesures == 0 :
+  if nb == 0 :
     conn.execute("INSERT INTO mesures (pir, light, sound) VALUES (?, ?, ?)", (0,0,0))
 
   # pour la table config :
   resultat = conn.execute("SELECT COUNT(*) FROM config")
   nb = resultat.fetchone()[0]
-  if nb_mesures == 0 :
+  if nb == 0 :
     conn.execute("INSERT INTO config (mode, luminosite, jeu_de_lumiere, etat) VALUES (?, ?, ?, ?)", ("manual",30,"static",0))
 
   # pour la table couleurs :
   resultat = conn.execute("SELECT COUNT(*) FROM couleurs")
   nb = resultat.fetchone()[0]
-  if nb_mesures == 0 :
+  if nb == 0 :
     conn.executemany("INSERT INTO couleurs (id, r, g, b) VALUES (?, ?, ?, ?)", [(i,255,255,255) for i in range(1,NUM_LEDS+1)])
 
   # La table images peut être vide.
