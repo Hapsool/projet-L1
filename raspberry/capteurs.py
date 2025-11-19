@@ -1,1 +1,3 @@
-
+import RPi.GPIO as GPIO
+from config import DB_PATH, LIGHT_SENSOR_PIN, SOUND_SENSOR_PIN, MOTION_SENSOR_PIN
+GPIO.setmode(GPIO.BCM)
