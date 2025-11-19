@@ -35,3 +35,10 @@ def changer_luminosite(valeur:int):
     luminosite = conn.execute("SELECT luminosite FROM config").fetchone()[0]
     conn.close()
     pixels.brightness = luminosite/100
+
+if __main__ == "__main__":
+    import time
+    time.sleep(1)
+    allumer_led()
+    time.sleep(3)
+    eteindre_led()
