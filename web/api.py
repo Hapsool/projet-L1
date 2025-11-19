@@ -11,9 +11,16 @@ app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates/")
 
-
-
-
+@app.post("/controle")
+def controle_led(request: Request):
+  data = await request.form()
+  luminosite = data.get("luminosite")
+  etat = data.get("etat")
+  conn = sqlite3.connect(DB_PATH)
+  conn.execute("UPDATE config SET luminosite = ?",luminosite)
+  conn.execute("UPDATE config SET etat = ?",etat)
+  conn.commit()
+  conn.close()
 
 
 if __name__ == "__main__":
