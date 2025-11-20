@@ -1,44 +1,36 @@
 import board
 import neopixel
-import sqlite3
 from config import DB_PATH, NUM_LEDS
 
 LED_PIN = board.D18
 
-conn = sqlite3.connect(DB_PATH)
-luminosite = conn.execute("SELECT luminosite FROM config").fetchone()[0]
-conn.close()
-
 pixels = neopixel.NeoPixel(
     LED_PIN,
     NUM_LEDS,
-    brightness=luminosite/100,
+    brightness=0.3,
     auto_write=False,
     pixel_order=neopixel.GRB
 )
 
 def eteindre_led():
+    """Colore toutes les leds en noir"""
     pixels.fill((0, 0, 0))
     pixels.show()
 
-def allumer_led():
-    conn = sqlite3.connect(DB_PATH)
-    couleurs = conn.execute("SELECT r, g, b FROM couleurs ORDER BY id").fetchall() # ex : [(255,255,255),(...),...]
-    conn.close()
+def allumer_led(couleurs:list[tuple[int,int,int]]):
+    """Peut être utiliser aussi pour rechanger la couleur"""
     for i in range(NUM_LEDS):
         pixels[i] = couleurs[i]
     pixels.show()
 
 def changer_luminosite(valeur:int):
-    """ valeur : entre 0 et 100 """
-    conn = sqlite3.connect(DB_PATH)
-    luminosite = conn.execute("SELECT luminosite FROM config").fetchone()[0]
-    conn.close()
-    pixels.brightness = luminosite/100
+    """valeur : entre 0 et 100"""
+    pixels.brightness = valeur/100
 
 if __main__ == "__main__":
     import time
+    c = [(255,255,255) for i in range(64)]
     time.sleep(1)
-    allumer_led()
+    allumer_led(c)
     time.sleep(3)
     eteindre_led()
