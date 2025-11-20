@@ -12,8 +12,8 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates/")
 
 @app.post("/controle")
-def controle_led(request: Request):
-  data =  request.form()
+async def controle_led(request: Request):
+  data =  await request.form()
   luminosite = float(data.get("luminosite"))
   etat = int(data.get("etat"))
   
@@ -27,4 +27,5 @@ def controle_led(request: Request):
 
 
 if __name__ == "__main__":
-  uvicorn.run(app)
+  from config import PORT
+  uvicorn.run(app, host="0.0.0.0", port=PORT)
