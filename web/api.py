@@ -13,14 +13,17 @@ templates = Jinja2Templates(directory="templates/")
 
 @app.post("/controle")
 def controle_led(request: Request):
-  data = await request.form()
-  luminosite = data.get("luminosite")
-  etat = data.get("etat")
+  data =  request.form()
+  luminosite = float(data.get("luminosite"))
+  etat = int(data.get("etat"))
+  
   conn = sqlite3.connect(DB_PATH)
-  conn.execute("UPDATE config SET luminosite = ?",luminosite)
-  conn.execute("UPDATE config SET etat = ?",etat)
+  conn.execute("UPDATE config SET luminosite = ?",(luminosite,))
+  conn.execute("UPDATE config SET etat = ?",(etat,))
   conn.commit()
   conn.close()
+  
+  return {"luminosite":luminosite,"etat":etat}
 
 
 if __name__ == "__main__":
