@@ -215,7 +215,7 @@ input:focus, textarea:focus, select:focus {
   height: 2.2vw;
   width: 2.2vw;
   left: 4px;
-  bottom: 4px;
+  bottom: 1vh;
   background-color: white;
   border-radius: 50%;
   transition: 0.4s;
@@ -253,3 +253,4 @@ input:focus, textarea:focus, select:focus {
   left: auto;
   left: 5.5vw;
 }
+
