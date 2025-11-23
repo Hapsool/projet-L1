@@ -35,7 +35,12 @@ async def update_led_luminosity(request: Request):
 
     return {"luminosite": luminosite}
 
+# -------page d'accueil------
+@app.get("/")
 
+def start(request:Request) -> str:
+    return templates.TemplateResponse('accueil',{'request': request,'title':'Lampe Intelligente'})
+#--------------fin---------------
 
 if __name__ == "__main__":
   from config import API_PORT
