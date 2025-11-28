@@ -5,9 +5,19 @@ from config import DB_PATH,API_PORT
 from web.api import app
 from capteurs import read_all, cleanup
 from led import allumer_led, eteindre_led, changer_luminosite
+from capteurs import read_light, read_sound, read_motion, read_all, cleanup
 
 animation_task = None
 
+async def boucle_capteurs():
+    while True:
+      sensor = read_all()
+      conn = sqlite3.connect(DB_PATH)
+      conn = sqlite3.connect(DB_PATH)
+      conn.execute("UPDATE mesures SET pir = ?,light = ?, sound = ?", (sensor["pir"],sensor["light"],sensor["sound"]))
+      conn.commit()
+      conn.close()
+    await asyncio.sleep(0.5)
 
 async def strobe():
   pass
@@ -67,6 +77,7 @@ async def boucle_led():
 
 async def main():
   asyncio.create_task(boucle_led())
+  asyncio.create_task(boucle_capteurs())
   config = uvicorn.Config(app=app, host="0.0.0.0", port=API_PORT)
   server = uvicorn.Server(config)
   await server.serve()
