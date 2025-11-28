@@ -24,6 +24,7 @@ def setup():
     luminosite INTEGER NOT NULL,
     jeu_de_lumiere TEXT NOT NULL,
     lum_min INTEGER NOT NULL,
+    audio_min INTEGER NOT NULL,
     couleur_actif TEXT NOT NULL,
     image_actif INTEGER,
     animation_actif TEXT,
@@ -59,7 +60,7 @@ def setup():
   resultat = conn.execute("SELECT COUNT(*) FROM config")
   nb = resultat.fetchone()[0]
   if nb == 0 :
-    conn.executemany("INSERT INTO config (mode,etat,luminosite,jeu_de_lumiere,lum_min,couleur_actif) VALUES (?,?,?,?,?)", ("manual",0,30,"couleur",100,"(255,255,255)"))
+    conn.executemany("INSERT INTO config (mode,etat,luminosite,jeu_de_lumiere,lum_min,audio_min,couleur_actif) VALUES (?,?,?,?,?)", ("manual",0,30,"couleur",100,500,"(255,255,255)"))
   conn.commit()
   conn.close()
 
