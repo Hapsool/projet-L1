@@ -43,7 +43,7 @@ def setup():
       (255, 255, 0), (255, 255, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 255), (255, 255, 0),
       (255, 255, 255), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 0, 255), (255, 0, 255), (255, 255, 255),
     ])
-    conn.executemany("INSERT INTO images (nom, matrice) VALUES (?, ?, ?)", ("smiley",smiley))
+    conn.executemany("INSERT INTO images (nom, matrice) VALUES (?, ?)", ("smiley",smiley))
 
   conn.commit()
   conn.close()
