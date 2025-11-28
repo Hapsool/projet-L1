@@ -8,52 +8,43 @@ def setup():
   # Créations des tables si elles n'existes pas :
   conn.executescript("""
   CREATE TABLE IF NOT EXISTS mesures (
-    pir INTEGER,
-    light INTEGER,
-    sound INTEGER 
+    pir INTEGER DEFAULT NULL,
+    light INTEGER DEFAULT NULL,
+    sound INTEGER DEFAULT NULL,
   );
-  CREATE TABLE IF NOT EXISTS config (
-    mode TEXT NOT NULL,
-    luminosite INTEGER NOT NULL,
-    jeu_de_lumiere TEXT NOT NULL,
-    etat INTEGER NOT NULL
-  );
-  CREATE TABLE IF NOT EXISTS couleurs (
-    id INTEGER PRIMARY KEY,
-    r INTEGER NOT NULL,
-    g INTEGER NOT NULL,
-    b INTEGER NOT NULL
-  );
-  CREATE TABLE IF NOT EXISTS images (
+    CREATE TABLE IF NOT EXISTS images (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     nom TEXT NOT NULL,
     date_creation TEXT,
     matrice TEXT NOT NULL
   );
+  CREATE TABLE IF NOT EXISTS config (
+    mode TEXT NOT NULL DEFAULT "manual",
+    luminosite INTEGER NOT NULL DEFAULT 30,
+    jeu_de_lumiere TEXT NOT NULL DEFAULT "couleur",
+    couleur_actif TEXT NOT NULL DEFAULT "(255,255,255)",
+    image_actif INTEGER DEFAULT NULL,
+    animation_actif TEXT DEFAULT NULL,
+    FOREIGN KEY(image_actif) REFERENCES images(id)
+  );
   """)
 
-  # Mise en place des valeurs de départ si les tables sont vides :
-
-  # pour la table mesures :
-  resultat = conn.execute("SELECT COUNT(*) FROM mesures")
+  # insertion d'une image pour la table images :
+  resultat = conn.execute("SELECT COUNT(*) FROM images")
   nb = resultat.fetchone()[0]
   if nb == 0 :
-    conn.execute("INSERT INTO mesures (pir, light, sound) VALUES (?, ?, ?)", (0,0,0))
+    smiley = str([
+      (255, 255, 255), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 255),
+      (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0),
+      (255, 255, 0), (255, 255, 255), (0, 0, 0), (255, 255, 0), (255, 255, 0), (255, 255, 255), (255, 255, 255), (255, 255, 0),
+      (255, 255, 0), (255, 255, 255), (255, 255, 255), (255, 255, 0), (255, 255, 0), (0, 0, 0), (255, 255, 255), (255, 255, 0),
+      (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0),
+      (255, 255, 0), (0, 0, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (0, 0, 0), (255, 255, 0),
+      (255, 255, 0), (255, 255, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 255), (255, 255, 0),
+      (255, 255, 255), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 0, 255), (255, 0, 255), (255, 255, 255),
+    ])
+    conn.executemany("INSERT INTO images (nom, matrice) VALUES (?, ?, ?)", ("smiley",smiley))
 
-  # pour la table config :
-  resultat = conn.execute("SELECT COUNT(*) FROM config")
-  nb = resultat.fetchone()[0]
-  if nb == 0 :
-    conn.execute("INSERT INTO config (mode, luminosite, jeu_de_lumiere, etat) VALUES (?, ?, ?, ?)", ("manual",30,"static",0))
-
-  # pour la table couleurs :
-  resultat = conn.execute("SELECT COUNT(*) FROM couleurs")
-  nb = resultat.fetchone()[0]
-  if nb == 0 :
-    conn.executemany("INSERT INTO couleurs (id, r, g, b) VALUES (?, ?, ?, ?)", [(i,255,255,255) for i in range(1,NUM_LEDS+1)])
-
-  # La table images peut être vide.
-    
   conn.commit()
   conn.close()
 
