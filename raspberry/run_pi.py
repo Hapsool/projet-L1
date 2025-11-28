@@ -30,9 +30,11 @@ async def boucle_led():
     etat = config[1]
     luminosite = config[2]
     jeu_de_lumiere = config[3]
-    couleur_actif	= eval(config[4])
-    image_actif	= eval(config[5])
-    animation_actif = config[6]
+    lum_min = config[4]
+    audio_min = config[5]
+    couleur_actif	= eval(config[6])
+    image_actif	= eval(config[7])
+    animation_actif = config[8]
 
     conn.close()
 
