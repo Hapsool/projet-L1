@@ -17,10 +17,13 @@ def eteindre_led():
     pixels.fill((0, 0, 0))
     pixels.show()
 
-def allumer_led(couleurs:list[tuple[int,int,int]]):
+def allumer_led(couleurs):
     """Peut être utiliser aussi pour rechanger la couleur"""
-    for i in range(NUM_LEDS):
-        pixels[i] = couleurs[i]
+    if len(couleurs) == 3 :
+        pixels.fill(couleurs)
+    else :
+        for i in range(NUM_LEDS):
+            pixels[i] = couleurs[i]
     pixels.show()
 
 def changer_luminosite(valeur:int):

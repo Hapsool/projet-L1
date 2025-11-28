@@ -6,9 +6,61 @@ from web.api import app
 from capteurs import read_all, cleanup
 from led import allumer_led, eteindre_led, changer_luminosite
 
+animation_task = None
+
+
+async def strobe():
+  pass
+
+async def fade():
+  pass
+
+async def flash():
+  pass
+
 async def boucle_led():
+
+  global animation_task
+
   while True :
-    
+    conn = sqlite3.connect(DB_PATH)
+    config = conn.execute("SELECT * FROM config")
+
+    mode = config[0]
+    etat = config[1]
+    luminosite = config[2]
+    jeu_de_lumiere = config[3]
+    couleur_actif	= eval(config[4])
+    image_actif	= eval(config[5])
+    animation_actif = config[6]
+
+    conn.close()
+
+    changer_luminosite(luminosite)
+
+    if mode == "manual" :
+      if etat == 0 :
+        eteindre_led()
+      elif etat == 1 :
+        if jeu_de_lumiere == "couleur":
+          allumer_led(couleur_actif)
+        elif jeu_de_lumiere == "image":
+          allumer_led(image_actif)
+        elif jeu_de_lumiere == "animation":
+            if animation_actif == "strobe":
+              if animation_task is None or animation_task.done():
+                animation_task = asyncio.create_task(strobe())
+            elif animation_actif == "fade":
+              if animation_task is None or animation_task.done():
+                animation_task = asyncio.create_task(fade())
+            else:
+              if animation_task is not None and not animation_task.done():
+                animation_task.cancel()
+                animation_task = None
+    elif mode == "auto" :
+      pass
+    elif mode == "sound":
+      pass
     await asyncio.sleep(0.1)
 
 async def main():
