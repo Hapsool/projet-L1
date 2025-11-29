@@ -38,7 +38,10 @@ def setup():
   resultat = conn.execute("SELECT COUNT(*) FROM mesures")
   nb = resultat.fetchone()[0]
   if nb == 0 :
-    conn.executemany("INSERT INTO mesures (pir, light, sound) VALUES (?, ?, ?)", (0,0,0))
+    conn.executemany(
+    "INSERT INTO mesures (pir, light, sound) VALUES (?, ?, ?)",
+    [(0, 0, 0)]
+)
 
   # pour la table images :
   resultat = conn.execute("SELECT COUNT(*) FROM images")
@@ -54,13 +57,19 @@ def setup():
       (255, 255, 0), (255, 255, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (0, 0, 0), (255, 0, 255), (255, 255, 0),
       (255, 255, 255), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 255, 0), (255, 0, 255), (255, 0, 255), (255, 255, 255),
     ])
-    conn.executemany("INSERT INTO images (nom, matrice) VALUES (?, ?)", ("smiley",smiley))
+    conn.executemany(
+    "INSERT INTO images (nom, matrice) VALUES (?, ?)",
+    [("smiley", smiley)]
+)
 
   # pour la table config :
   resultat = conn.execute("SELECT COUNT(*) FROM config")
   nb = resultat.fetchone()[0]
   if nb == 0 :
-    conn.executemany("INSERT INTO config (mode,etat,luminosite,jeu_de_lumiere,lum_min,audio_min,couleur_actif) VALUES (?,?,?,?,?)", ("manual",0,30,"couleur",100,500,"(255,255,255)"))
+    conn.executemany(
+    "INSERT INTO config (mode,etat,luminosite,jeu_de_lumiere,lum_min,audio_min,couleur_actif) VALUES (?,?,?,?,?,?,?)",
+    [("manual", 0, 30, "couleur", 100, 500, "(255,255,255)")]
+    )
   conn.commit()
   conn.close()
 
