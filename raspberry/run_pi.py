@@ -59,7 +59,7 @@ async def boucle_led():
     lum_min = config[4]
     audio_min = config[5]
     couleur_actif	= eval(config[6])
-    image_actif	= eval(config[7])
+    image_actif	= config[7]
     animation_actif = config[8]
 
     conn.close()
