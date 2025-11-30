@@ -43,7 +43,7 @@ def changer_luminosite(valeur:int):
     """valeur : entre 0 et 100"""
     pixels.brightness = valeur/100
 
-if __main__ == "__main__":
+if __name__ == "__main__":
     import time
     c = [(255,255,255) for i in range(64)]
     time.sleep(1)
