@@ -3,9 +3,8 @@ import uvicorn
 import sqlite3
 from config import DB_PATH,API_PORT
 from web.api import app
-from capteurs import read_all, cleanup
-from led import allumer_led, eteindre_led, changer_luminosite, toggle_led
-from capteurs import read_light, read_sound, read_motion, read_all, cleanup
+from raspberry.capteurs import read_light, read_sound, read_motion, read_all, cleanup
+from raspberry.led import allumer_led, eteindre_led, changer_luminosite, toggle_led
 
 animation_task = None
 
@@ -51,7 +50,7 @@ async def boucle_led():
 
   while True :
     conn = sqlite3.connect(DB_PATH)
-    config = conn.execute("SELECT * FROM config")
+    config = conn.execute("SELECT * FROM config").fetchone()
 
     mode = config[0]
     etat = config[1]
