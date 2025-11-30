@@ -16,7 +16,7 @@ async def boucle_capteurs():
       conn.execute("UPDATE mesures SET pir = ?,light = ?, sound = ?", (sensor["pir"],sensor["light"],sensor["sound"]))
       conn.commit()
       conn.close()
-    await asyncio.sleep(0.5)
+      await asyncio.sleep(0.5)
 
 async def strobe():
   pass
