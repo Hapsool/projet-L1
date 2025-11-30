@@ -96,12 +96,10 @@ async def boucle_led():
   
     await asyncio.sleep(0.1)
 
-async def main():
-  asyncio.create_task(boucle_led())
-  asyncio.create_task(boucle_capteurs())
-  config = uvicorn.Config(app=app, host="0.0.0.0", port=API_PORT)
-  server = uvicorn.Server(config)
-  await server.serve()
+@app.on_event("startup")
+async def start_background_tasks():
+    asyncio.create_task(boucle_led())
+    asyncio.create_task(boucle_capteurs())
 
 if __name__ == "__main__":
-  asyncio.run(main())
+    uvicorn.run(app, host="0.0.0.0", port=API_PORT)
