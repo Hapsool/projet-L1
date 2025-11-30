@@ -1,3 +1,23 @@
+
+from pathlib import Path
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
+
+BASE_DIR = Path(__file__).resolve().parent  # dossier /web
+
+templates = Jinja2Templates(directory=str(BASE_DIR / "templates"))
+app.mount("/static", StaticFiles(directory=str(BASE_DIR / "static")), name="static")
+
+
+
+
+
+
+
+
+
+
+
 import sqlite3
 from pathlib import Path
 import uvicorn
