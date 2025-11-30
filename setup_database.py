@@ -1,5 +1,5 @@
 import sqlite3
-from config import DB_PATH, NUM_LEDS
+from config import DB_PATH, CAPTEUR_AUDIO_SEUIL_DEFAUT, CAPTEUR_LUMIERE_SEUIL_DEFAUT, INTENSITE_LUMIERE_DEFAUT
 
 def setup():
   conn = sqlite3.connect(DB_PATH)
@@ -68,7 +68,7 @@ def setup():
   if nb == 0 :
     conn.executemany(
     "INSERT INTO config (mode,etat,luminosite,jeu_de_lumiere,lum_min,audio_min,couleur_actif) VALUES (?,?,?,?,?,?,?)",
-    [("manual", 0, 30, "couleur", 100, 500, "(255,255,255)")]
+    [("manual", 0, INTENSITE_LUMIERE_DEFAUT, "couleur", CAPTEUR_LUMIERE_SEUIL_DEFAUT, CAPTEUR_AUDIO_SEUIL_DEFAUT, "(255,255,255)")]
     )
   conn.commit()
   conn.close()
