@@ -7,8 +7,8 @@ GPIO.setup(MOTION_SENSOR_PIN, GPIO.IN)
 
 adc = ADC()
 
-def read_light(): return adc(LIGHT_SENSOR_PIN)
-def read_sound(): return adc(SOUND_SENSOR_PIN)
+def read_light(): return adc.read(LIGHT_SENSOR_PIN)
+def read_sound(): return adc.read(SOUND_SENSOR_PIN)
 def read_motion(): return GPIO.input(MOTION_SENSOR_PIN)
 def read_all(): return {"light":read_light(),"sound":read_sound(),"pir":read_motion()}
 def cleanup(): GPIO.cleanup()
