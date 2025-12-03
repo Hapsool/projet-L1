@@ -2,19 +2,20 @@
 
 <html>
     <head>
+        <link rel="icon" href="/static/image/lumiere.png" type="image/x-icon">
         <title>{{ title }}</title>
 
-        <script src="/static/javascript/javascript_general.js" defer></script>
+        <script src="/static/javascript/javascript_accueil.js" defer></script>
         <link rel="stylesheet" href="/static/css/style_general.css">
     </head>
     <body>
         <h1>Lampe Intelligente ©</h1>
-        <div class="groupe_de_boutons">
-            <button>Informations</button>
-            <button>Personnalisation</button>
-            <button>Paramètres</button>
+        <div class="groupe_de_boutons" style = "margin-top : 5vw;">
+            <a href="/information" style="text-decoration: none;"><button>Informations</button></a>
+            <a href="/personnalisation" style="text-decoration: none;"><button>Personnalisation</button></a>
+            <a href="/parametre" style="text-decoration: none;"><button>Paramètres</button></a>
         </div>
-        <div class="switch-container">
+        <div class="switch-container invisible">
             <label class="switch">
                 <input type="checkbox", id="toggleSwitch">
                 <span class="slider"></span>
