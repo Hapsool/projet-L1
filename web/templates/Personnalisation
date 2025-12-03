@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="icon" href="/static/image/lumiere.png" type="image/x-icon">
+        <title>Personnalisation</title>
+
+        <script src="/static/javascript/javascript_personnalisation.js" defer></script>
+        <link rel="stylesheet" href="/static/css/style_general.css">
+    </head>
+
+    <body>
+        <div>
+            <a href="/" style="text-decoration: none;">
+                <button class="retour"><img src="/static/image/icone_menu.png"></button>
+            </a>
+        </div>
+        <h1>Personnalisation</h1>
+        <div class="section_deux_tier">
+
+            <div class="container">
+                <div class="groupe_de_boutons">
+                    <button class="boutons_mode" data-mode="couleur">Couleur</button>
+                    <button class="boutons_mode" data-mode="image">image</button>
+                    <button class="boutons_mode" data-mode="animation">animation</button>
+                </div>
+            </div>
+
+            <div class="container invisible">
+            </div>
+            
+        </div>
+        <div class="container partie_droite_personnalisation invisible" data-mode="couleur">
+            <div class="color-picker">
+                <div id="preview"></div>
+
+                <label>
+                    Teinte (Hue)
+                    <input id="hue" type="range" min="0" max="360" value="180">
+                </label>
+
+                <label>
+                    Saturation
+                    <input id="sat" type="range" min="0" max="100" value="50">
+                </label>
+
+                <label>
+                    Luminosité
+                    <input id="light" type="range" min="0" max="100" value="50">
+                </label>
+            </div>
+        </div>
+        <div class="container partie_droite_personnalisation invisible" data-mode="image">
+            <h5>image</h5>
+            <h5>image</h5>
+            <h5>image</h5>
+            <h5>image</h5>
+            <h5>image</h5>
+            <h5>image</h5>
+        </div>
+        <div class="container partie_droite_personnalisation invisible" data-mode="animation">
+            <h1>animation</h1>
+        </div>
+    </body>
+</html>

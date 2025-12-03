@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="icon" href="/static/image/lumiere.png" type="image/x-icon">
+        <title>Paramètres</title>
+
+        <script src="/static/javascript/javascript_parametre.js" defer></script>
+        <link rel="stylesheet" href="/static/css/style_general.css">
+    </head>
+
+    <body>
+        <div>
+            <a href="/" style="text-decoration: none;">
+                <button class="retour"><img src="/static/image/icone_menu.png"></button>
+            </a>
+        </div>
+        <h1>Paramètres</h1>
+
+        <h2>Mode</h2>
+
+        <label for="mode">Choisis un mode :</label>
+        <h6>Comment les Leds se comportent (Manuel => Allumer/Eteindre manuellement depuis le menu du site, Automatique => s'allume et s'eteint tout seul en fonction de la présence d'individu, d'un clap et du taux de luminosité ambiante)</h6>
+        <select id="mode">
+            <option value="manual">Manuel</option>
+            <option value="auto">Automatique</option>
+        </select>
+
+        <h1 style="margin-top: 8vh;"></h1>
+
+        <h2>paramètres personnalisés</h2>
+
+        <label for="audio">sensibilité du capteur audio :</label>
+        <h6>seuil en decibel a partir duquel la led va s'enclencher (si en mode automatique)</h6>
+        <input type="nombre" id="sensibilite_audio" >
+
+        <label for="lumiere">sensibilité du capteur lumiere :</label>
+        <h6>seuil en éclairage ambiant de la pièce a partir duquel la led va s'enclencher (si en mode automatique)</h6>
+        <input type="nombre" id="sensibilite_lumiere" >
+
+        <label for="intensite">intensité lumiere :</label>
+        <h6>intensité de la lumière des leds</h6>
+        <input type="nombre" id="intensite" >
+
+        <div id="status"></div>
+        <h1></h1>
+        <button id="reset"> Reinitialiser par défaut</button>
+    </body>
+</html>

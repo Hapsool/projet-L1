@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <link rel="icon" href="/static/image/lumiere.png" type="image/x-icon">
+        <title>Informations</title>
+
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/spline.js"></script>
+
+        <script src="/static/javascript/javascript_information.js" defer></script>
+        <link rel="stylesheet" href="/static/css/style_general.css">
+    </head>
+
+    <body>
+        <div>
+            <a href="/" style="text-decoration: none;">
+                <button class="retour"><img src="/static/image/icone_menu.png"></button>
+            </a>
+        </div>
+        <h1>informations</h1>
+        <div class="section">
+            <div id="graphe">
+                
+            </div>
+            <div class="container">
+                <div class="section">
+                    <h5>Intensité des LEDS : </h5>
+                    <h5 id="info_luminosite">rien</h5>
+                </div>
+                <h5>blablablablablablablablablablablablablab</h5>
+                <h5>blablablablablablablablablablablablablab</h5>
+                <h5>blablablablablablablablablablablablablab</h5>
+                <h5>blablablablablablablablablablablablablab</h5>
+                <h5>blablablablablablablablablablablablablab</h5>
+                <h5>blablablablablablablablablablablablablab</h5>
+            </div>
+        </div>
+    </body>
+</html>
