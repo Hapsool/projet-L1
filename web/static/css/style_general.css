@@ -61,41 +61,82 @@ h1, h2, h3, h4, h5, h6 {
 
 h2 { font-size: 2rem; }
 h3 { font-size: 1.5rem; }
+h5 {font-size: 1.5vw;}
+h6 {
+  font-size : 1.1vw;
+  color: #4f7bb2;
+}
 
 p {
   margin-bottom: 1rem;
   color: var(--text-secondary);
 }
 
-a {
+.lien {
   color: var(--accent);
   text-decoration: none;
   transition: var(--transition);
 }
 
-a:hover {
+.lien:hover {
   color: var(--accent-hover);
   text-decoration: underline;
 }
 
 /* ===== divs grp de bouttons ===== */
 .groupe_de_boutons {
-  margin-top : 5vw;
   display: flex;
   flex-direction: column; /* empile les éléments verticalement */
   justify-content: space-between; /* espace vertical égal entre les éléments */
   height: 20vw; /* nécessaire pour que l'espacement fonctionne */
 }
 
+/*====== divs sections info ====== */
+
+
+.section {
+  justify-content: space-between; /* pousse un élément à gauche et l’autre à droite */
+  align-items: center; /* optionnel : aligne verticalement */
+  /*border: 1px solid #ccc; /* juste pour visualiser */
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 3 sections égales */
+}
+
+.section_deux_tier {
+  justify-content: space-between; /* pousse un élément à gauche et l’autre à droite */
+  align-items: center; /* optionnel : aligne verticalement */
+  /*border: 1px solid #ccc; /* juste pour visualiser */
+
+  display: grid;
+  gap: 200px;
+  margin-left: 2vw;
+}
+
+.sous_section_nombre {
+  text-justify: center;
+}
+
 /* ===== divs CONTENEURS ÉPURÉS ===== */
 .container {
-  max-width: 900px;
-  margin: 5vw auto;
+  max-width: 50vw;
+  max-height: 100vh;
+  /*margin: 5vw auto;*/
   padding: 2.5rem;
   background: var(--bg-secondary);
   border-radius: var(--radius);
   border: 1px solid var(--border);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.invisible {
+  display: none !important;
+}
+
+.partie_droite_personnalisation {
+  position: absolute;
+  left: 45vw;
+  top: 28vh;
 }
 
 /* ===== CARTES ===== */
@@ -254,4 +295,61 @@ input:focus, textarea:focus, select:focus {
   left: 5.5vw;
 }
 
+/* boutton retour*/
+button.retour {
+    position: absolute;      /* position par rapport à parent */
+    top: 0;
+    left: 0;
+    margin: 2vw;             /* petit espace depuis le coin */
+    width: 5vw;              /* largeur proportionnelle à l'écran */
+    aspect-ratio: 1 / 1;     /* hauteur = largeur pour rester carré */
+    display: flex;            /* active flexbox pour centrer le contenu */
+    align-items: center;      /* centre verticalement texte et image */
+    justify-content: center;  /* centre horizontalement texte et image */
+    /*background-color: rgb(117, 223, 255); */
+    border: none;
+    cursor: pointer;
+    padding: 0;               /* éviter que le texte déforme le carré */
+    box-sizing: border-box;   /* inclut border dans width/height */
+}
+
+/* Si tu as une image à l'intérieur */
+button.retour img {
+    width: 60%;               /* l'image fait 60% du bouton */
+    height: auto;             /* garde les proportions */
+    object-fit: contain;
+}
+
+/*------------- boutons_selections------------- */
+
+.boutons_mode {
+  margin : 0px
+}
+
+.boutons_mode.selected {
+  background-color: #ffc822;
+  transform: scale(1.1); /* 10% plus grand */
+}
+
+
+/* ----------selection couleur------------------*/
+.color-picker {
+  width: 40vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#preview {
+  width: 7vw;
+  height: 7vw;
+  border-radius: 12px;
+  border: 2px solid #ccc;
+  background: hsl(180, 50%, 50%);
+  margin: 0 auto; /* centre horizontalement */
+}
+
+label {
+  font-size: 1.5vw;
+}
 
