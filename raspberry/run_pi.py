@@ -19,13 +19,51 @@ async def boucle_capteurs():
       await asyncio.sleep(0.5)
 
 async def strobe():
-  pass
+  while True :
+    allumer_led((255,0,0))
+    for i in range(1,256):
+      allumer_led((255-i,i,0))
+      asyncio.sleep(0.05)
+
+    allumer_led((0,255,0))
+    for i in range(1,256):
+      allumer_led((0,255-i,i))
+      asyncio.sleep(0.05)
+
+    allumer_led((0,0,255))
+    for i in range(1,256):
+      allumer_led((i,0,255-i))
+      asyncio.sleep(0.05)
 
 async def fade():
-  pass
+  while True :
+
+    allumer_led((255,0,0))
+    asyncio.sleep(1)
+    for i in range(1,256) :
+      allumer_led((255,i,i))
+      asyncio.sleep(0.05)
+
+    allumer_led((0,255,0))
+    asyncio.sleep(1)
+    for i in range(1,256) :
+      allumer_led((i,255,i))
+      asyncio.sleep(0.05)
+
+    allumer_led((0,0,255))
+    asyncio.sleep(1)
+    for i in range(1,256) :
+      allumer_led((i,i,255))
+      asyncio.sleep(0.05)
 
 async def flash():
-  pass
+  while True :
+    allumer_led((255,0,0))
+    asyncio.sleep(2)
+    allumer_led((0,255,0))
+    asyncio.sleep(2)
+    allumer_led((0,0,255))
+    asyncio.sleep(2)
 
 async def choix_lumiere(jeu_de_lumiere,couleur_actif,image_actif,animation_actif) : 
   if jeu_de_lumiere == "couleur":
