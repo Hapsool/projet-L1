@@ -16,31 +16,91 @@ console.log("JavaScript fonctionne !");
 /* --------------graphe test------------------------------*/
 // Initialisation du graphique vide
 const chart = Highcharts.chart('graphe', {
-    chart: { type: 'spline' },
-    title: { text: 'Luminosité en temps réel' },
+    chart: { type: 'spline', animation: Highcharts.svg },
+    title: { text: 'Luminosité Ambiante en temps réel' },
     xAxis: {
-        type: 'datetime', // affiche le temps en abscisse
+        type: 'datetime',
         tickPixelInterval: 150
     },
     yAxis: {
         title: { text: 'Luminosité' },
-        min: 0
+        min: 0,
+        max: 1023    // valeur maximale de l'axe
     },
     series: [{
         name: 'Luminosité LED',
         data: [] // vide au départ
-    }]
+    }],
+    series: [
+        {
+            name: 'Luminosité ambiante',
+            data: []
+        },
+        {
+            name: 'seuil d\'activation de la led',
+            data: [],            // vide au départ
+            type: 'line',
+            color: 'red',
+            dashStyle: 'Dash',
+            enableMouseTracking: false
+        }
+    ]
 });
 
-async function chargerDonnees() {
-    const response = await fetch("/capteur_lumiere/luminosite");
-    const data = await response.json();
-    console.log(data);
+async function updateSeuil() {
+    try {
+        const response = await fetch("/capteur/seuil_luminosite");
+        const data = await response.json();
+
+        const now = Date.now();
+        const seriesSeuil = chart.series[1];
+
+        console.log(data.lum_min)
+
+        // On remplace les points pour que la droite soit toujours sur 5 secondes
+        seriesSeuil.setData([
+            [now - 5000, data.lum_min],  // 5 secondes avant
+            [now, data.lum_min]          // maintenant
+        ], true); // true pour redraw
+
+    } catch (error) {
+        console.error("Erreur lors du chargement des données :", error);
+    }
 }
 
-chargerDonnees();
 
-/* raffraichissement des données en temps réel */
-setInterval(() => {
-  chart.series[0].addPoint(Math.random() * 100, true, true);
-}, 1000);
+// Fonction pour récupérer la dernière valeur
+async function chargerDonnees() {
+    try {
+        const response = await fetch('/capteur/lumiere');
+        const data = await response.json();
+
+        // Créer le point : timestamp = maintenant, y = luminosité
+        const point = [new Date().getTime(), Number(data.luminosite)];
+
+        console.log('Ajout du point :', point);
+
+        const series = chart.series[0];
+        const serie_droite = chart.series[1]
+        series.addPoint(point, true, false);
+
+        // Supprimer les points trop anciens (plus de 5 secondes)
+        const now = new Date().getTime();
+        while (series.data.length > 0 && series.data[0].x < now - 5000) {
+            series.data[0].remove(false);
+        }
+
+        updateSeuil()
+
+        chart.redraw();
+    } catch (error) {
+        console.error("Erreur lors du chargement des données :", error);
+    }
+}
+
+
+// Rafraîchissement toutes les 500 ms
+setInterval(chargerDonnees, 500);
+
+// Chargement initial
+chargerDonnees();
