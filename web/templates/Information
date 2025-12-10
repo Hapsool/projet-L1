@@ -6,7 +6,6 @@
         <title>Informations</title>
 
         <script src="https://code.highcharts.com/highcharts.js"></script>
-        <script src="https://code.highcharts.com/modules/spline.js"></script>
 
         <script src="/static/javascript/javascript_information.js" defer></script>
         <link rel="stylesheet" href="/static/css/style_general.css">
@@ -37,4 +36,5 @@
             </div>
         </div>
     </body>
+
 </html>
