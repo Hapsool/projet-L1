@@ -33,6 +33,17 @@ async def test():
     return {"message": "Serveur OK"}
 
 #-----------------fonctions get/post------------------
+#recup la lumiere ambiante capté
+@app.get('/capteur/lumiere')
+async def get_led_mode(request: Request):
+    conn = sqlite3.connect(DB_FULL_PATH)
+    cursor = conn.cursor()
+    cursor. execute("SELECT light FROM mesures LIMIT 1")
+    row = cursor.fetchone()
+    conn.close()
+    return {"luminosite": row[0] if row else 0}
+
+
 #change le mode
 @app.post("/led/mode")
 async def update_led_mode(request: Request):
