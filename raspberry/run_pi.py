@@ -66,19 +66,19 @@ async def flash():
     asyncio.sleep(2)
 
 async def choix_lumiere(jeu_de_lumiere,couleur_actif,image_actif,animation_actif) : 
-  if jeu_de_lumiere == "couleur":
-          allumer_led(couleur_actif)
-        elif jeu_de_lumiere == "image":
-          allumer_led(image_actif)
-        elif jeu_de_lumiere == "animation":
-            if animation_actif == "strobe":
-              if animation_task is None or animation_task.done():
+    if jeu_de_lumiere == "couleur":
+        allumer_led(couleur_actif)
+    elif jeu_de_lumiere == "image":
+        allumer_led(image_actif)
+    elif jeu_de_lumiere == "animation":
+        if animation_actif == "strobe":
+            if animation_task is None or animation_task.done():
                 animation_task = asyncio.create_task(strobe())
-            elif animation_actif == "fade":
-              if animation_task is None or animation_task.done():
+        elif animation_actif == "fade":
+            if animation_task is None or animation_task.done():
                 animation_task = asyncio.create_task(fade())
-            else:
-              if animation_task is not None and not animation_task.done():
+        else:
+            if animation_task is not None and not animation_task.done():
                 animation_task.cancel()
                 animation_task = None
 
