@@ -45,7 +45,7 @@ def changer_luminosite(valeur:int):
 
 if __name__ == "__main__":
     import time
-    c = [(255,255,255) for i in range(64)]
+    c = [(255,255,255) for i in range(NUM_LEDS)]
     time.sleep(1)
     allumer_led(c)
     time.sleep(3)
