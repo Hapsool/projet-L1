@@ -111,13 +111,17 @@ async def boucle_led():
         choix_lumiere(jeu_de_lumiere,couleur_actif,image_actif,animation_actif)
 
     elif mode == "auto" :
-      if read_motion() == 0 :
+      etat_led = 0
+      if read_light() >= lum_min :
         eteindre_led()
-      elif read_motion() == 1 :
-        if read_light() < lum_min :
+      else :
+        if read_motion() == 0 :
+          eteindre_led()
+        elif read_motion() == 1 :
           choix_lumiere(jeu_de_lumiere,couleur_actif,image_actif,animation_actif)
+          etat_led = 1
       conn = sqlite3.connect(DB_PATH)
-      conn.execute("UPDATE config SET etat = ?",(read_motion(),))
+      conn.execute("UPDATE config SET etat = ?",(etat_led,))
       conn.commit()
       conn.close()
 
