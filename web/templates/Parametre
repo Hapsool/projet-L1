@@ -24,6 +24,7 @@
         <select id="mode">
             <option value="manual">Manuel</option>
             <option value="auto">Automatique</option>
+            <option value="sound">Sonore</option>
         </select>
 
         <h1 style="margin-top: 8vh;"></h1>
