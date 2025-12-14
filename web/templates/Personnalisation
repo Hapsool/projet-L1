@@ -36,30 +36,31 @@
 
                 <label>
                     Teinte (Hue)
-                    <input id="hue" type="range" min="0" max="360" value="180">
+                    <input id="hue" type="range" min="0" max="360" >
                 </label>
 
                 <label>
                     Saturation
-                    <input id="sat" type="range" min="0" max="100" value="50">
+                    <input id="sat" type="range" min="0" max="100" >
                 </label>
 
                 <label>
                     Luminosité
-                    <input id="light" type="range" min="0" max="100" value="50">
+                    <input id="light" type="range" min="0" max="100" >
                 </label>
             </div>
         </div>
         <div class="container partie_droite_personnalisation invisible" data-mode="image">
-            <h5>image</h5>
-            <h5>image</h5>
-            <h5>image</h5>
-            <h5>image</h5>
-            <h5>image</h5>
-            <h5>image</h5>
+            <h5>Fonction qui n'a pas pu être implémenté dû à la reception</h5><h5>de la mauvaise Led. :(</h5>
         </div>
         <div class="container partie_droite_personnalisation invisible" data-mode="animation">
-            <h1>animation</h1>
+            <div class="info_bulle_2">
+                <select id="animation", style="width: 20vw; height: 20vh; font-size: 2vw; text-align: center;">
+                    <option value="effet_1", style="font-size: 2vw;">Effet 1</option>
+                    <option value="effet_2", style="font-size: 2vw;">Effet 2</option>
+                    <option value="effet_3", style="font-size: 2vw;">Effet 3</option>
+                </select>
+            </div>
         </div>
     </body>
 </html>
