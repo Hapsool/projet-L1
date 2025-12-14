@@ -19,22 +19,29 @@
         </div>
         <h1>informations</h1>
         <div class="section">
-            <div id="graphe">
+            <div id="graphe", class="graphe-container">
                 
             </div>
-            <div class="container">
-                <div class="section">
-                    <h5>Intensité des LEDS : </h5>
-                    <h5 id="info_luminosite">rien</h5>
+            <div class="info_bulle">
+                <div class="container">
+                    <div class="section">
+                        <h5>Luminosité des LEDS : </h5>
+                        <h5 id="info_luminosite">rien</h5>
+                    </div>
+                    <div class="section">
+                        <h5>Mode actuel : </h5>
+                        <h5 id="info_mode">rien</h5>
+                    </div>
+                    <div class="section">
+                        <h5>Affichage actuel : </h5>
+                        <h5 id="info_affichage">rien</h5>
+                    </div>
+                    <div class="section">
+                        <h5>Présence captée : </h5>
+                        <h5 id="info_pir">rien</h5>
+                    </div>
                 </div>
-                <h5>blablablablablablablablablablablablablab</h5>
-                <h5>blablablablablablablablablablablablablab</h5>
-                <h5>blablablablablablablablablablablablablab</h5>
-                <h5>blablablablablablablablablablablablablab</h5>
-                <h5>blablablablablablablablablablablablablab</h5>
-                <h5>blablablablablablablablablablablablablab</h5>
             </div>
         </div>
     </body>
-
 </html>
