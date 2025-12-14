@@ -33,6 +33,72 @@ async def test():
     return {"message": "Serveur OK"}
 
 #-----------------fonctions get/post------------------
+
+#change l'animation
+@app.post("/animation")
+async def update_led_mode(request: Request):
+    data = await request.form()
+    effet = data.get("effet")
+
+    conn = sqlite3.connect(DB_FULL_PATH)
+    conn.execute("UPDATE config SET animation_actif = ?", (effet,))
+    conn.commit()
+    conn.close()
+
+    return {"effet": effet}
+
+#recup animation
+@app.get('/animation')
+async def get_led_mode(request: Request):
+    conn = sqlite3.connect(DB_FULL_PATH)
+    cursor = conn.cursor()
+    cursor. execute("SELECT animation_actif FROM config LIMIT 1")
+    row = cursor.fetchone()
+    conn.close()
+    return {"effet": row[0] if row else 0}
+
+#recup couleur mode couleur unis
+@app.get('/couleur')
+async def get_led_mode(request: Request):
+    conn = sqlite3.connect(DB_FULL_PATH)
+    cursor = conn.cursor()
+    cursor. execute("SELECT couleur_actif FROM config LIMIT 1")
+    row = cursor.fetchone()
+    conn.close()
+    return row[0] if row else 0
+
+#change couleur mode couleur unis
+@app.post("/couleur")
+async def update_type_d_affichage(request: Request):
+    couleur = (await request.body()).decode("utf-8")
+
+    conn = sqlite3.connect(DB_FULL_PATH)
+    conn.execute("UPDATE config SET couleur_actif = ?", (couleur,)) 
+    conn.commit()
+    conn.close()
+
+    return {"couleur": couleur}
+
+#recup le bool detection presence (pir)
+@app.get('/capteur/pir')
+async def get_led_mode(request: Request):
+    conn = sqlite3.connect(DB_FULL_PATH)
+    cursor = conn.cursor()
+    cursor. execute("SELECT pir FROM mesures LIMIT 1")
+    row = cursor.fetchone()
+    conn.close()
+    return {"pir": row[0] if row else 0}
+
+#recup le bruit ambiant capté
+@app.get('/capteur/audio')
+async def get_led_mode(request: Request):
+    conn = sqlite3.connect(DB_FULL_PATH)
+    cursor = conn.cursor()
+    cursor. execute("SELECT sound FROM mesures LIMIT 1")
+    row = cursor.fetchone()
+    conn.close()
+    return {"sound": row[0] if row else 0}
+
 #recup la lumiere ambiante capté
 @app.get('/capteur/lumiere')
 async def get_led_mode(request: Request):
