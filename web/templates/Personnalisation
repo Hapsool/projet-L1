@@ -56,11 +56,12 @@
         <div class="container partie_droite_personnalisation invisible" data-mode="animation">
             <div class="info_bulle_2">
                 <select id="animation", style="width: 20vw; height: 20vh; font-size: 2vw; text-align: center;">
-                    <option value="effet_1", style="font-size: 2vw;">Effet 1</option>
-                    <option value="effet_2", style="font-size: 2vw;">Effet 2</option>
-                    <option value="effet_3", style="font-size: 2vw;">Effet 3</option>
+                    <option value="strobe", style="font-size: 2vw;">Stroboscopique</option>
+                    <option value="fade", style="font-size: 2vw;">Fondu</option>
+                    <option value="flash", style="font-size: 2vw;">Flash</option>
                 </select>
             </div>
         </div>
     </body>
 </html>
+
