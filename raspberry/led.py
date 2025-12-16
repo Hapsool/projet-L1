@@ -17,7 +17,7 @@ def eteindre_led():
     """Colore toutes les leds en noir"""
     global STATE
     STATE = False
-    pixels.fill((0, 0, 0))
+    pixels.brightness = 0
     pixels.show()
 
 def allumer_led(couleurs):
@@ -42,6 +42,7 @@ def toggle_led(couleurs):
 def changer_luminosite(valeur:int):
     """valeur : entre 0 et 100"""
     pixels.brightness = valeur/100
+    pixels.show()
 
 if __name__ == "__main__":
     import time
