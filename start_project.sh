@@ -22,7 +22,7 @@ else
 fi
 
 echo "=== Lancement du programme Raspberry Pi ==="
-if python3 -m raspberry.run_pi; then
+if sudo python3 -m raspberry.run_pi; then
     echo "✅ Script Raspberry terminé."
 else
     echo "❌ Erreur lors de l'exécution du Raspberry Pi script."
