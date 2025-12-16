@@ -66,6 +66,7 @@ async def flash():
     asyncio.sleep(2)
 
 def choix_lumiere(jeu_de_lumiere,couleur_actif,image_actif,animation_actif) : 
+    global animation_task
     if jeu_de_lumiere == "couleur":
         allumer_led(couleur_actif)
     elif jeu_de_lumiere == "image":
@@ -83,9 +84,6 @@ def choix_lumiere(jeu_de_lumiere,couleur_actif,image_actif,animation_actif) :
                 animation_task = None
 
 async def boucle_led():
-
-  global animation_task
-
   while True :
     conn = sqlite3.connect(DB_PATH)
     config = conn.execute("SELECT * FROM config").fetchone()
