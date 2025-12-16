@@ -65,7 +65,7 @@ async def flash():
     allumer_led((0,0,255))
     asyncio.sleep(2)
 
-async def choix_lumiere(jeu_de_lumiere,couleur_actif,image_actif,animation_actif) : 
+def choix_lumiere(jeu_de_lumiere,couleur_actif,image_actif,animation_actif) : 
     if jeu_de_lumiere == "couleur":
         allumer_led(couleur_actif)
     elif jeu_de_lumiere == "image":
