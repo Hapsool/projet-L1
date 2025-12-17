@@ -63,8 +63,8 @@ def setup():
   nb = resultat.fetchone()[0]
   if nb == 0 :
     conn.executemany(
-    "INSERT INTO config (mode,etat,luminosite,jeu_de_lumiere,lum_min,audio_min,couleur_actif) VALUES (?,?,?,?,?,?,?)",
-    [("manual", 0, INTENSITE_LUMIERE_DEFAUT, "couleur", CAPTEUR_LUMIERE_SEUIL_DEFAUT, CAPTEUR_AUDIO_SEUIL_DEFAUT, "(255,255,255)")]
+    "INSERT INTO config (mode,etat,luminosite,jeu_de_lumiere,lum_min,audio_min,couleur_actif,image_actif,animation_actif) VALUES (?,?,?,?,?,?,?,?,?)",
+    [("manual", 0, INTENSITE_LUMIERE_DEFAUT, "couleur", CAPTEUR_LUMIERE_SEUIL_DEFAUT, CAPTEUR_AUDIO_SEUIL_DEFAUT, "(255,255,255)",1,"strobe")]
     )
   conn.commit()
   conn.close()
