@@ -1,12 +1,12 @@
 import board
 import neopixel
-from config import DB_PATH, NUM_LEDS
+from config import DB_PATH, NUM_LEDS, LED_PIN
 
-LED_PIN = board.D18
+LED_RING_PIN = eval("board.D"+str(LED_PIN))
 STATE = False
 
 pixels = neopixel.NeoPixel(
-    LED_PIN,
+    LED_RING_PIN,
     NUM_LEDS,
     brightness=0.3,
     auto_write=False,
