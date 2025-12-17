@@ -59,9 +59,11 @@
                     <option value="strobe", style="font-size: 2vw;">Stroboscopique</option>
                     <option value="fade", style="font-size: 2vw;">Fondu</option>
                     <option value="flash", style="font-size: 2vw;">Flash</option>
+                    <option value="rainbow", style="font-size: 2vw;">Arc-en-Ciel</option>
                 </select>
             </div>
         </div>
     </body>
 </html>
+
 
