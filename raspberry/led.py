@@ -14,7 +14,7 @@ pixels = neopixel.NeoPixel(
 )
 
 def eteindre_led():
-    """Colore toutes les leds en noir"""
+    """Change la luminosité à 0"""
     global STATE
     STATE = False
     pixels.brightness = 0
