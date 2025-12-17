@@ -23,7 +23,7 @@ async def update_led_mode(request: Request):
     data = await request.form()
     effet = data.get("effet")
 
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     conn.execute("UPDATE config SET animation_actif = ?", (effet,))
     conn.commit()
     conn.close()
