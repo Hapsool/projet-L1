@@ -1,31 +1,14 @@
-import sys
-import os
-# Ajouter le dossier parent au path pour que Python trouve config.py
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-from config import INTENSITE_LUMIERE_DEFAUT
-from config import CAPTEUR_LUMIERE_SEUIL_DEFAUT
-from config import CAPTEUR_AUDIO_SEUIL_DEFAUT
-from config import DB_PATH
-#chemin bidouillé qui fonction :
-# Chemin absolu vers la base
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))  # dossier où est main.py
-DB_FULL_PATH = os.path.join(BASE_DIR, "..", DB_PATH)  # remonte d’un dossier si besoin
-print(DB_FULL_PATH)  # pour vérifier
-
 import uvicorn
 import sqlite3
+from config import INTENSITE_LUMIERE_DEFAUT,CAPTEUR_LUMIERE_SEUIL_DEFAUT,CAPTEUR_AUDIO_SEUIL_DEFAUT,DB_PATH
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 
 app = FastAPI() # Création de l application
-templates = Jinja2Templates(directory="templates/")
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-
-
+templates = Jinja2Templates(directory="web/templates/")
+app.mount("/static", StaticFiles(directory="web/static"), name="static")
 
 #test
 @app.get("/test")
@@ -50,7 +33,7 @@ async def update_led_mode(request: Request):
 #recup animation
 @app.get('/animation')
 async def get_led_mode(request: Request):
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor. execute("SELECT animation_actif FROM config LIMIT 1")
     row = cursor.fetchone()
@@ -60,7 +43,7 @@ async def get_led_mode(request: Request):
 #recup couleur mode couleur unis
 @app.get('/couleur')
 async def get_led_mode(request: Request):
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor. execute("SELECT couleur_actif FROM config LIMIT 1")
     row = cursor.fetchone()
@@ -72,7 +55,7 @@ async def get_led_mode(request: Request):
 async def update_type_d_affichage(request: Request):
     couleur = (await request.body()).decode("utf-8")
 
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     conn.execute("UPDATE config SET couleur_actif = ?", (couleur,)) 
     conn.commit()
     conn.close()
@@ -82,7 +65,7 @@ async def update_type_d_affichage(request: Request):
 #recup le bool detection presence (pir)
 @app.get('/capteur/pir')
 async def get_led_mode(request: Request):
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor. execute("SELECT pir FROM mesures LIMIT 1")
     row = cursor.fetchone()
@@ -92,7 +75,7 @@ async def get_led_mode(request: Request):
 #recup le bruit ambiant capté
 @app.get('/capteur/audio')
 async def get_led_mode(request: Request):
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor. execute("SELECT sound FROM mesures LIMIT 1")
     row = cursor.fetchone()
@@ -102,7 +85,7 @@ async def get_led_mode(request: Request):
 #recup la lumiere ambiante capté
 @app.get('/capteur/lumiere')
 async def get_led_mode(request: Request):
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor. execute("SELECT light FROM mesures LIMIT 1")
     row = cursor.fetchone()
@@ -116,7 +99,7 @@ async def update_led_mode(request: Request):
     data = await request.form()
     mode = data.get("mode")
 
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     conn.execute("UPDATE config SET mode = ?", (mode,))
     conn.commit()
     conn.close()
@@ -126,7 +109,7 @@ async def update_led_mode(request: Request):
 #recup le mode
 @app.get('/led/mode')
 async def get_led_mode(request: Request):
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor. execute("SELECT mode FROM config LIMIT 1")
     row = cursor.fetchone()
@@ -143,7 +126,7 @@ def get_valeurs_par_defaut():
 async def update_type_d_affichage(request: Request):
     audio_min = (await request.body()).decode("utf-8")
 
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     conn.execute("UPDATE config SET audio_min = ?", (audio_min,)) 
     conn.commit()
     conn.close()
@@ -153,7 +136,7 @@ async def update_type_d_affichage(request: Request):
 #recup le seuil audio capteur
 @app.get("/capteur/seuil_audio")
 def get_audio_min():
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -171,7 +154,7 @@ def get_audio_min():
 async def update_type_d_affichage(request: Request):
     lum_min = (await request.body()).decode("utf-8")
 
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     conn.execute("UPDATE config SET lum_min = ?", (lum_min,)) 
     conn.commit()
     conn.close()
@@ -181,7 +164,7 @@ async def update_type_d_affichage(request: Request):
 #recup le seuil lumi capteur
 @app.get("/capteur/seuil_luminosite")
 def get_lum_min():
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -204,7 +187,7 @@ async def update_type_d_affichage(request: Request):
     if type_affichage not in MODES_VALIDES:
         return {"error": "mode invalide"}, 400
 
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     conn.execute("UPDATE config SET jeu_de_lumiere = ?", (type_affichage,))
     conn.commit()
     conn.close()
@@ -214,7 +197,7 @@ async def update_type_d_affichage(request: Request):
 #donne le jeu de lumiere actuel
 @app.get("/led/affichage")
 def get_jeu_de_lumiere():
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -233,7 +216,7 @@ async def update_led_state(request: Request):
     data = await request.form()
     etat = int(data.get("etat"))
 
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     conn.execute("UPDATE config SET etat = ?", (etat,))
     conn.commit()
     conn.close()
@@ -242,7 +225,7 @@ async def update_led_state(request: Request):
 
 @app.get("/led/state")
 async def get_led_state(request: Request):
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
 
     cursor.execute("SELECT etat FROM config LIMIT 1")
@@ -259,7 +242,7 @@ async def update_led_luminosite(request: Request):
     data = await request.form()
     luminosite = float(data.get("luminosite"))
 
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     conn.execute("UPDATE config SET luminosite = ?", (luminosite,))
     conn.commit()
     conn.close()
@@ -270,7 +253,7 @@ async def update_led_luminosite(request: Request):
 
 @app.get('/led/luminosite')
 async def get_led_luminosite(request: Request):
-    conn = sqlite3.connect(DB_FULL_PATH)
+    conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
     cursor. execute("SELECT luminosite FROM config LIMIT 1")
     row = cursor.fetchone()
