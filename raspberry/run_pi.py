@@ -18,16 +18,18 @@ last_state = {
 }
 
 async def boucle_capteurs():
-    while True:
-      sensor = read_all()
-      conn = sqlite3.connect(DB_PATH)
-      conn = sqlite3.connect(DB_PATH)
-      conn.execute("UPDATE mesures SET pir = ?,light = ?, sound = ?", (sensor["pir"],sensor["light"],sensor["sound"]))
-      conn.commit()
-      conn.close()
-      await asyncio.sleep(0.5)
+  """Mise à jour les valeurs des capteurs dans la base de donnée toutes les 0.5 secondes."""
+  while True:
+    sensor = read_all()
+    conn = sqlite3.connect(DB_PATH)
+    conn = sqlite3.connect(DB_PATH)
+    conn.execute("UPDATE mesures SET pir = ?,light = ?, sound = ?", (sensor["pir"],sensor["light"],sensor["sound"]))
+    conn.commit()
+    conn.close()
+    await asyncio.sleep(0.5)
 
 async def strobe():
+  """Animation Strobe"""
   try :
     while True:
       allumer_led((255,0,0))
@@ -47,6 +49,7 @@ async def strobe():
     raise
 
 async def fade():
+  """Animation Fade"""
   try :
     while True:
       allumer_led((255,0,0))
@@ -70,6 +73,7 @@ async def fade():
 
 
 async def flash():
+  """Animation Flash"""
   try :
     while True:
       allumer_led((255,0,0))
@@ -83,16 +87,18 @@ async def flash():
     raise
 
 def wheel(pos):
-    if pos < 85:
-        return (pos * 3, 255 - pos * 3, 0)
-    elif pos < 170:
-        pos -= 85
-        return (255 - pos * 3, 0, pos * 3)
-    else:
-        pos -= 170
-        return (0, pos * 3, 255 - pos * 3)
+  """Pour l'animation Rainbow"""
+  if pos < 85:
+      return (pos * 3, 255 - pos * 3, 0)
+  elif pos < 170:
+      pos -= 85
+      return (255 - pos * 3, 0, pos * 3)
+  else:
+      pos -= 170
+      return (0, pos * 3, 255 - pos * 3)
 
 async def rainbow():
+  """Animation Rainbow"""
   try :
     while True:
         for j in range(255):
@@ -107,17 +113,20 @@ async def rainbow():
     raise
 
 def stop_animation():
+  """Stop l'animation joué"""
   global animation_task
   if animation_task is not None and not animation_task.done():
     animation_task.cancel()
     animation_task = None
     
-def start_animation(anim):
+def start_animation(anim:str):
+  """Commence une nouvelle animation anim"""
   global animation_task
   stop_animation()
   animation_task = asyncio.create_task(anim)
   
 def choix_lumiere(etat,luminosite,jeu_de_lumiere,couleur_actif,image_actif,animation_actif) : 
+  """Décide de l'état et du jeu de lumière de la led selon ses paramètres."""
   global animation_task,last_state
   
   current_state = {
@@ -154,6 +163,7 @@ def choix_lumiere(etat,luminosite,jeu_de_lumiere,couleur_actif,image_actif,anima
     last_state = current_state
 
 async def boucle_led():
+  """Boucle principale des leds."""
   while True :
     conn = sqlite3.connect(DB_PATH)
     config = conn.execute("SELECT * FROM config").fetchone()
@@ -164,7 +174,7 @@ async def boucle_led():
     lum_min = config[4]
     audio_min = config[5]
     couleur_actif	= eval(config[6])
-    image_actif	= config[7]
+    image_actif	= eval(conn.execute("SELECT matrice FROM images WHERE id = ?",(config[7],)).fetchone()[0])
     animation_actif = config[8]
     conn.close()
     if mode == "manual" :
@@ -187,8 +197,9 @@ async def boucle_led():
 
 @app.on_event("startup")
 async def start_background_tasks():
-    asyncio.create_task(boucle_led())
-    asyncio.create_task(boucle_capteurs())
+  """Active les boucles principales après le démarrage du site web."""
+  asyncio.create_task(boucle_led())
+  asyncio.create_task(boucle_capteurs())
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=API_PORT)
+  uvicorn.run(app, host="0.0.0.0", port=API_PORT)
